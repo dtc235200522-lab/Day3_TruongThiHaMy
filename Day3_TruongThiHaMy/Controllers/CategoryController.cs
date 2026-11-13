@@ -8,6 +8,15 @@ namespace Day3_TruongThiHaMy.Controllers
    
     public class CategoryController : Controller
     {
+        //ghi log
+        private readonly ILogger<CategoryController> _logger;
+        //khoi tao logger
+        public CategoryController(ILogger<CategoryController> logger)
+        {
+            _logger = logger;
+        }
+
+        //gia lap csdl
         private static List<Category> categories = new List<Category>
         {
             new Category() { Id = 1, Name = "Category 1" },
@@ -24,8 +33,12 @@ namespace Day3_TruongThiHaMy.Controllers
         // GET: CategoryController/Details/5
         public ActionResult Details(int id)
         {
+            _logger.LogInformation($"Dang lay ma danh muc san pham: {id}");
             var category = categories.FirstOrDefault(c => c.Id == id);
-            if (category == null) return NotFound();
+            if (category == null)
+            {
+                return NotFound(); 
+            }
             return View(category);
         }
 
