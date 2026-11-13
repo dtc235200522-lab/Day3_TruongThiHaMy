@@ -1,0 +1,55 @@
+﻿@model List<Day3_TruongThiHaMy.Models.Product>
+@{
+    var search = ViewBag.Search as Day3_TruongThiHaMy.Models.ProductSearchModel;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<h2>Tìm kiếm sản phẩm</h2>
+
+<form method="get" asp-controller="ProductSearch" asp-action="Index" class="mb-3">
+    <input type="text" name="keyword" value="@search?.Keyword" placeholder="Từ khóa..." />
+    <button type="submit">Tìm kiếm</button>
+    <a asp-action="Index">Xóa lọc</a>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.ProductId</td>
+                <td>@p.ProductName</td>
+                <td>@p.ProductPrice</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Trang:
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == currentPage)
+        {
+            <strong>@i</strong>
+        }
+        else
+        {
+            <a asp-controller="ProductSearch"
+               asp-action="Index"
+               asp-route-page="@i"
+               asp-route-keyword="@search?.Keyword">
+                @i
+            </a>
+        }
+        <text> </text>
+    }
+</div>
